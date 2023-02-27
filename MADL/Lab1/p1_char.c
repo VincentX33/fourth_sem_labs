@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include <time.h>
 /*
 3 functions
 merge sort : merge, mergesort
@@ -97,8 +98,17 @@ int main()
     scanf(" %c", &letters[i]);
   // for (int i = 0; i < n; i++)
   // printf("%c", letters[i]);
+  //before starting merge sort
+  clock_t starttime, endtime;
+  starttime = clock();
+  printf("Starting time is %ld\n",starttime);
   mergesort(letters, 0, n - 1);
   // mergesort(ages,0,10);
+  endtime = clock();
+  printf("Ending time is %ld\n",endtime);
+  double total_time = (double)(endtime-starttime)/CLOCKS_PER_SEC;
+  printf("Time taken to merge sort is : %f",total_time);
+
   for (int i = 0; i < n; i++)
   {
     // printf("%d ",ages[i]);

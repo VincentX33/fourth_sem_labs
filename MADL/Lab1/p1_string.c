@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
+#include <time.h>
 /*
 3 functions
 merge sort : merge, mergesort
@@ -75,13 +76,13 @@ void merge(char arr[][MAX], int low, int mid, int high)
     l++;
   }
 }
-int binarySearch(char arr[][MAX], int low, int high, char * x)
+int binarySearch(char arr[][MAX], int low, int high, char *x)
 {
   // searches for string x in sorted array a
   // base case when low==high
   if (low == high)
   {
-    if (strcmp(arr[low],x) == 0)
+    if (strcmp(arr[low], x) == 0)
       return low;
     else
       return -1;
@@ -89,9 +90,9 @@ int binarySearch(char arr[][MAX], int low, int high, char * x)
   else
   {
     int mid = (low + high) / 2;
-    if (strcmp(arr[mid],x)==0)
+    if (strcmp(arr[mid], x) == 0)
       return mid;
-    else if (strcmp(arr[mid],x) < 0)
+    else if (strcmp(arr[mid], x) < 0)
       return binarySearch(arr, mid + 1, high, x);
     else
       return binarySearch(arr, low, mid - 1, x);
@@ -112,7 +113,15 @@ int main()
   printf("\nBefore sorting: ");
   for (int i = 0; i < n; i++)
     printf("%s ", words[i]);
+  // before starting merge sort
+  clock_t starttime, endtime;
+  starttime = clock();
+  printf("Starting time is %ld\n", starttime);
   mergesort(words, 0, n - 1);
+  endtime = clock();
+  printf("Ending time is %ld\n",endtime);
+  double total_time = (double)(endtime-starttime)/CLOCKS_PER_SEC;
+  printf("Time taken to merge sort is : %f",total_time);
   printf("\nAfter sorting: ");
   for (int i = 0; i < n; i++)
   {
@@ -121,7 +130,7 @@ int main()
   printf("\n");
   printf("Enter string to search:");
   scanf(" %s", c);
-  if ((l = binarySearch(words, 0, n - 1,c)) >= 0)
+  if ((l = binarySearch(words, 0, n - 1, c)) >= 0)
   {
     printf("Item %s found @ index : %d\n", c, l);
   }

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include <time.h>
+
 /*
 3 functions
 merge sort : merge, mergesort
@@ -106,7 +108,7 @@ int main()
 {
   struct pair values[10];
   int n, l, t;
-  float f,tf;
+  float f, tf;
   char c;
   printf("enter number of pairs:");
   scanf("%d", &n);
@@ -117,10 +119,19 @@ int main()
     values[i].x = f;
     values[i].y = l;
   }
+  // before starting merge sort
+  clock_t starttime, endtime;
+  starttime = clock();
+  printf("Starting time is %ld\n", starttime);
   mergesort(values, 0, n - 1);
+  endtime = clock();
+  printf("Ending time is %ld\n",endtime);
+  double total_time = (double)(endtime-starttime)/CLOCKS_PER_SEC;
+  printf("Time taken to merge sort is : %f",total_time);
+
   for (int i = 0; i < n; i++)
   {
-    printf("%f, %d\n", values[i].x,values[i].y);
+    printf("%f, %d\n", values[i].x, values[i].y);
   }
   printf("\n");
   printf("Enter pair to search:");
@@ -128,13 +139,13 @@ int main()
   struct pair value;
   value.x = tf;
   value.y = t;
-  if ((l = binarySearch(values, 0, n - 1,value)) >= 0)
+  if ((l = binarySearch(values, 0, n - 1, value)) >= 0)
   {
-    printf("Pair (%f, %d) found @ index : %d\n", tf,t, l);
+    printf("Pair (%f, %d) found @ index : %d\n", tf, t, l);
   }
   else
   {
-    printf("Pair (%f, %d) not found\n", tf,t);
+    printf("Pair (%f, %d) not found\n", tf, t);
   }
   return 0;
 }

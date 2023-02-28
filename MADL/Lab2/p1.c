@@ -11,6 +11,7 @@ int partition(int arr[], int low, int high)
   int i = low;
   int j = high;
   int t;
+  // if (i==j)return i; check if this code works later
   /*
   to determine the correct position of pivot element, we have
   to find how many items there are smaller than it, and how many larger than it
@@ -35,9 +36,18 @@ int partition(int arr[], int low, int high)
   } while (i < j);
   arr[low] = arr[j];
   arr[j] = pivot;
-  // printArray(arr, low, high);
+  printArray(arr, low, high);
   return j;
 }
+/* debug notes*/
+/*
+im taking one extra ie if there are 9 elements, j starts from 9
+maybe that is the problem: or maybe not because at every comparision it checks the last element
+this might lead to error with low:j-1, as instead of giving
+j-1 to the lh quicksort, i have to give low,j: automatically it will handle the j-1 part
+
+*/
+/* debug notes*/
 void printArray(int arr[], int l, int h)
 {
   printf("low = %d, high = %d => [ ", l, h);
@@ -51,8 +61,10 @@ void quicksort(int arr[], int low, int high)
   if (low < high)
   {
     j = partition(arr, low, high);
+    printf("Partition is %d\n",j);
     quicksort(arr, low, j);
-    quicksort(arr, j+1, high);
+    quicksort(arr, j+1, high); //+1 to handle errors
+    //+1 ensures the a[j] comparison starts from last element, not second last
     printArray(arr, low, high);
   }
 }
@@ -65,6 +77,7 @@ int main()
   for (int i = 0; i < n; i++)
     scanf("%d", nums + i);
   // printf("partition index for %d is %d\n",nums[0],partition(nums,0,8));
+  nums[n] = 1000;
   quicksort(nums, 0, n);
   for (int i = 0; i < n; i++)
     printf("%d ", nums[i]);
